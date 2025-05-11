@@ -151,28 +151,19 @@ export default function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <p className="text-lg text-gray-700">
-                  With over 5 years of experience in software development, I specialize in building high-performance web applications, AI-driven systems, and cloud-native solutions.
+                  Associate Engineer (DAE in Electronics) exploring network automation, my skills as an Associate Engineer include:
                 </p>
-                <p className="text-lg text-gray-700">
-                  My journey began with a passion for problem-solving and has evolved into crafting elegant digital experiences that solve real-world challenges. I thrive in environments where innovation meets execution.
-                </p>
-                <p className="text-lg text-gray-700">
-                  I am constantly exploring emerging technologies and methodologies to stay at the forefront of the ever-evolving tech landscape.
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { icon: "🧠", label: "Network Automation", value: "Advanced" },
-                  { icon: "📊", label: "Ansible & Python", value: "Intermediate" },
-                  { icon: "☁️", label: "Linux & DevOps", value: "Proficient" },
-                  { icon: "💻", label: "Backend Development", value: "Beginner" }
-                ].map((skill, idx) => (
-                  <div key={idx} className="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                    <div className="text-4xl mb-2">{skill.icon}</div>
-                    <h3 className="font-semibold text-lg text-gray-800">{skill.label}</h3>
-                    <p className="text-sm text-gray-500">{skill.value}</p>
-                  </div>
-                ))}
+                <ul className="list-disc list-inside space-y-2 text-lg text-gray-700">
+                  <li>Routing and Switching</li>
+                  <li>OFC/LAN Networking</li>
+                  <li>IP Addressing and Sub-netting</li>
+                  <li>Computer Basics - Windows 7/10</li>
+                  <li>Linux and Ubuntu Desktop/Server</li>
+                  <li>VMware/KVM/VirtualBox</li>
+                  <li>Docker/Vagrant - Hands On</li>
+                  <li>Ansible for Network Automation</li>
+                  <li>Python for Network Automation</li>
+                </ul>
               </div>
             </div>
           </div>
