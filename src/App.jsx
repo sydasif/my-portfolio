@@ -1,5 +1,86 @@
 import { useState, useEffect } from 'react';
 
+// Custom Hook: useContactForm
+function useContactForm() {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setForm((prev) => ({ ...prev, [id]: value }));
+
+    // Optionally clear error on typing
+    if (errors[id]) {
+      setErrors((prev) => ({ ...prev, [id]: null }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    if (!form.name.trim()) {
+      newErrors.name = 'Name is required.';
+      isValid = false;
+    } else if (form.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters.';
+      isValid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!form.email.trim()) {
+      newErrors.email = 'Email is required.';
+      isValid = false;
+    } else if (!emailRegex.test(form.email)) {
+      newErrors.email = 'Please enter a valid email address.';
+      isValid = false;
+    }
+
+    if (!form.subject.trim()) {
+      newErrors.subject = 'Subject is required.';
+      isValid = false;
+    }
+
+    if (!form.message.trim()) {
+      newErrors.message = 'Message must be at least 10 characters.';
+      isValid = false;
+    } else if (form.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log('Form submitted:', form);
+      setSuccessMessage('Your message has been sent successfully!');
+      setForm({ name: '', email: '', subject: '', message: '' });
+
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 5000);
+    }
+  };
+
+  return {
+    form,
+    errors,
+    successMessage,
+    handleChange,
+    handleSubmit
+  };
+}
+
 // Navbar Component
 const Navbar = ({ activeSection, isMenuOpen, setIsMenuOpen }) => {
   return (
@@ -332,79 +413,58 @@ const Contact = () => {
 
             {/* Right Side: Form */}
             <div className="md:w-2/3 p-8">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Field */}
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
-                      errors.name ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                  />
-                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
+                      value={form.name}
+                      onChange={handleChange}
+                    />
+                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+                      value={form.email}
+                      onChange={handleChange}
+                    />
+                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                  </div>
                 </div>
-
-                {/* Email Field */}
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
-                      errors.email ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                  />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-                </div>
-
-                {/* Subject Field */}
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Subject</label>
                   <input
                     type="text"
                     id="subject"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white"
                     value={form.subject}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
-                      errors.subject ? 'border-red-500' : 'border-gray-300'
-                    }`}
                   />
-                  {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
                 </div>
-
-                {/* Message Field */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Message</label>
                   <textarea
                     id="message"
                     rows="5"
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition resize-none dark:bg-gray-800 dark:border-gray-600 dark:text-white ${errors.message ? 'border-red-500' : 'border-gray-300'}`}
                     value={form.message}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none resize-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
-                      errors.message ? 'border-red-500' : 'border-gray-300'
-                    }`}
                   ></textarea>
                   {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
                 </div>
-
-                {/* Submit Button */}
                 <button
                   type="submit"
                   className="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-indigo-700 transition transform hover:scale-[1.02] shadow-md hover:shadow-lg dark:bg-indigo-500 dark:hover:bg-indigo-600"
                 >
                   Send Message
                 </button>
-
-                {/* Success Message */}
-                {successMessage && (
-                  <p className="text-green-600 text-center mt-4">{successMessage}</p>
-                )}
               </form>
             </div>
           </div>
@@ -413,140 +473,3 @@ const Contact = () => {
     </section>
   );
 };
-
-// Footer Component
-const Footer = () => {
-  return (
-    <footer className="bg-gray-800 text-white py-10 dark:bg-gray-900 dark:text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <h3 className="text-2xl font-bold text-indigo-400">JohnDoe.dev</h3>
-            <p className="text-gray-400 mt-2 dark:text-gray-500">Crafting exceptional digital experiences since 2019</p>
-          </div>
-          <div className="flex space-x-6">
-            {['GitHub', 'LinkedIn', 'Twitter'].map((social, idx) => (
-              <a
-                key={idx}
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors dark:text-gray-400 dark:hover:text-white"
-              >
-                {social}
-              </a>
-            ))}
-          </div>
-        </div>
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm dark:border-gray-700">
-          &copy; {new Date().getFullYear()} John Doe. All rights reserved.
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-// Main App Component
-export default function App() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    if (newMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('darkMode', JSON.stringify(newMode));
-  };
-
-  useEffect(() => {
-    const savedMode = localStorage.getItem('darkMode');
-    // Initialize with system preference if no saved mode, or default to false (light)
-    const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isEnabled = savedMode ? JSON.parse(savedMode) : systemPrefersDark; // Or just false if no system preference check
-    setDarkMode(isEnabled);
-
-    if (isEnabled) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark'); // Ensure light mode is set if not enabled
-    }
-  }, []);
-
-  // Scroll tracking effect
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'about', 'education', 'projects', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element && element.offsetTop <= scrollPosition && element.offsetTop + element.offsetHeight > scrollPosition) {
-          setActiveSection(section);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Projects data
-  const projects = [
-    {
-      title: "Network Utilities Web Application",
-      description: "A Django-based web application that provides various network utilities and tools for IP address management and network testing.",
-      techStack: ["Django", "Netutils", "Python"],
-      image: "https://placehold.co/600x400/2563eb/ffffff?text=Network+Utilities  ",
-      link: "https://github.com/sydasif/django-network-app "
-    },
-    {
-      title: "Django Network Device Manager",
-      description: "A Django application for network device management using Netmiko library. This tool provides a web interface for managing and interacting with network devices through SSH connections.",
-      techStack: ["Django", "Python", "Netmiko"],
-      image: "https://placehold.co/600x400/10b981/ffffff?text=Network+Manager ",
-      link: "https://github.com/sydasif/django_network_manager "
-    },
-    {
-      title: "Resume Template",
-      description: "A professional resume generator that converts JSON data into a beautifully formatted HTML and PDF resume. The project uses Jinja2 templates for HTML generation and pdfkit for PDF conversion.",
-      techStack: ["Python", "HTML", "Json"],
-      image: "https://placehold.co/600x400/7c3aed/ffffff?text=Resume+Generator  ",
-      link: "https://github.com/sydasif/resume_template "
-    },
-    {
-      title: "Python for Network Automation",
-      description: "Learn Network Programmability with Python, GNS3, and Cisco devices.",
-      techStack: ["Python", "Cisco", "GNS3"],
-      image: "https://placehold.co/600x400/db2777/ffffff?text=Python+Book  ",
-      link: "https://python-automation-book.readthedocs.io/en/latest/ "
-    }
-  ];
-
-  return (
-    <div className="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-white transition-colors duration-300">
-      <Navbar activeSection={activeSection} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-
-      {/* Example Toggle Button - Placed for visibility, can be moved */}
-      <div style={{ position: 'fixed', top: '80px', right: '20px', zIndex: 100 }}>
-        <button
-          onClick={toggleDarkMode}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600"
-        >
-          {darkMode ? 'Light Mode' : 'Dark Mode'}
-        </button>
-      </div>
-
-      <main>
-        <Hero />
-        <About />
-        <Education />
-        <Projects projects={projects} />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
-  );
-}
