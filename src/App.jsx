@@ -27,8 +27,9 @@ export default function App() {
     {
       title: "Network Utilities Web Application",
       description: "A Django-based web application that provides various network utilities and tools for IP address management and network testing.",
-      techStack: ["Django", "Netutils"],
-      image: "https://placehold.co/600x400/2563eb/ffffff?text=Network+Utilities "
+      techStack: ["Django", "Netutils", "Python"],
+      image: "https://placehold.co/600x400/2563eb/ffffff?text=Network+Utilities ",
+      link: "https://github.com/sydasif/django-network-app"
     },
     {
       title: "Django Network Device Manager",
@@ -38,10 +39,11 @@ export default function App() {
       link: "https://github.com/sydasif/django_network_manager"
     },
     {
-      title: "Task Management Tool",
-      description: "Created a collaborative task management tool with drag-and-drop interface and team collaboration features.",
-      techStack: ["Vue.js", "Firebase", "Vuetify"],
-      image: "https://placehold.co/600x400/7c3aed/ffffff?text=Task+Manager "
+      title: "Resume Template",
+      description: "A professional resume generator that converts JSON data into a beautifully formatted HTML and PDF resume. The project uses Jinja2 templates for HTML generation and pdfkit for PDF conversion.",
+      techStack: ["Python", "HTML", "Json"],
+      image: "https://placehold.co/600x400/7c3aed/ffffff?text=Resume+Generator ",
+      link: "https://github.com/sydasif/resume_template"
     },
     {
       title: "Weather Dashboard",
@@ -57,7 +59,7 @@ export default function App() {
       <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <a href="#home" className="text-2xl font-bold text-indigo-600">JohnDoe.dev</a>
+            <a href="#home" className="text-2xl font-bold text-indigo-600">NetDevOps Engineer</a>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8">
