@@ -25,9 +25,9 @@ export default function App() {
 
   const projects = [
     {
-      title: "AI-Powered Chatbot",
-      description: "Developed a chatbot using NLP and deep learning models that improved customer support response time by 40%.",
-      techStack: ["React", "Node.js", "TensorFlow"],
+      title: "Network Utilities Web Application",
+      description: "A Django-based web application that provides various network utilities and tools for IP address management and network testing.",
+      techStack: ["Django", "Netutils"],
       image: "https://placehold.co/600x400/2563eb/ffffff?text=Chatbot+Project "
     },
     {
@@ -158,10 +158,10 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-6">
                 {[
-                  { icon: "💻", label: "Full-Stack Development", value: "Expert" },
-                  { icon: "🧠", label: "Artificial Intelligence", value: "Advanced" },
-                  { icon: "☁️", label: "Cloud Computing", value: "Proficient" },
-                  { icon: "📊", label: "Data Analysis", value: "Intermediate" }
+                  { icon: "🧠", label: "Network Automation", value: "Advanced" },
+                  { icon: "📊", label: "Ansible & Python", value: "Intermediate" },
+                  { icon: "☁️", label: "Linux & DevOps", value: "Proficient" },
+                  { icon: "💻", label: "Backend Development", value: "Beginner" }
                 ].map((skill, idx) => (
                   <div key={idx} className="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                     <div className="text-4xl mb-2">{skill.icon}</div>
@@ -251,7 +251,7 @@ export default function App() {
                         </span>
                       ))}
                     </div>
-                    <a href="#" className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800 transition-colors">
+                    <a href="https://github.com/sydasif/django-network-app" className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800 transition-colors">
                       View Details
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -338,7 +338,7 @@ export default function App() {
               <p className="text-gray-400 mt-2">Crafting exceptional digital experiences since 2019</p>
             </div>
             <div className="flex space-x-6">
-              {['GitHub', 'LinkedIn', 'Twitter', 'Behance'].map((social, idx) => (
+              {['GitHub', 'LinkedIn', 'Twitter'].map((social, idx) => (
                 <a
                   key={idx}
                   href="#"
