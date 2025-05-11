@@ -133,7 +133,7 @@ export default function App() {
             </div>
             <div className="md:w-1/2 flex justify-center">
               <img
-                src="https://placehold.co/400x400/6366f1/ffffff?text=John+Doe "
+                src="https://placehold.co/400x400/6366f1/ffffff?text=Syed+Asif "
                 alt="Profile"
                 className="rounded-full w-64 h-64 object-cover shadow-xl transform transition duration-500 hover:rotate-3 hover:scale-105"
               />
