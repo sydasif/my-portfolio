@@ -28,7 +28,7 @@ export default function App() {
       title: "Network Utilities Web Application",
       description: "A Django-based web application that provides various network utilities and tools for IP address management and network testing.",
       techStack: ["Django", "Netutils"],
-      image: "https://placehold.co/600x400/2563eb/ffffff?text=Chatbot+Project "
+      image: "https://placehold.co/600x400/2563eb/ffffff?text=Network+Utilities "
     },
     {
       title: "E-commerce Platform",
