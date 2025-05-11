@@ -476,8 +476,34 @@ const Footer = () => {
 
 // Main App Component
 export default function App() {
+  const [darkMode, setDarkMode] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    if (newMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('darkMode', JSON.stringify(newMode));
+  };
+
+  useEffect(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    // Initialize with system preference if no saved mode, or default to false (light)
+    const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isEnabled = savedMode ? JSON.parse(savedMode) : systemPrefersDark; // Or just false if no system preference check
+    setDarkMode(isEnabled);
+
+    if (isEnabled) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark'); // Ensure light mode is set if not enabled
+    }
+  }, []);
 
   // Scroll tracking effect
   useEffect(() => {
@@ -532,6 +558,17 @@ export default function App() {
   return (
     <div className="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-white transition-colors duration-300">
       <Navbar activeSection={activeSection} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+
+      {/* Example Toggle Button - Placed for visibility, can be moved */}
+      <div style={{ position: 'fixed', top: '80px', right: '20px', zIndex: 100 }}>
+        <button
+          onClick={toggleDarkMode}
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600"
+        >
+          {darkMode ? 'Light Mode' : 'Dark Mode'}
+        </button>
+      </div>
+
       <main>
         <Hero />
         <About />
