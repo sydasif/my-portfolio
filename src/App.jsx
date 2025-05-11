@@ -313,70 +313,7 @@ const Projects = ({ projects }) => {
 };
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
-  const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState('');
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setForm((prev) => ({ ...prev, [id]: value }));
-    // Optionally clear the specific error when the user starts typing
-    if (errors[id]) {
-      setErrors(prevErrors => ({ ...prevErrors, [id]: null }));
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    let isValid = true;
-
-    if (!form.name.trim()) {
-      newErrors.name = 'Name is required.';
-      isValid = false;
-    } else if (form.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters.';
-      isValid = false;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!form.email.trim()) {
-      newErrors.email = 'Email is required.';
-      isValid = false;
-    } else if (!emailRegex.test(form.email)) {
-      newErrors.email = 'Please enter a valid email address.';
-      isValid = false;
-    }
-
-    if (!form.subject.trim()) { // Added subject validation
-      newErrors.subject = 'Subject is required.';
-      isValid = false;
-    }
-
-    if (!form.message.trim()) {
-      newErrors.message = 'Message is required.'; // Changed from "at least 10 characters" to just "required" for initial step, can adjust
-      isValid = false;
-    } else if (form.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters.';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log('Form submitted:', form);
-      setSuccessMessage('Your message has been sent successfully!');
-      setForm({ name: '', email: '', subject: '', message: '' }); // Clear form
-      setErrors({}); // Clear errors
-
-      setTimeout(() => {
-        setSuccessMessage('');
-      }, 5000);
-    }
-  };
+  const { form, errors, successMessage, handleChange, handleSubmit } = useContactForm();
 
   return (
     <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-800">
@@ -413,58 +350,79 @@ const Contact = () => {
 
             {/* Right Side: Form */}
             <div className="md:w-2/3 p-8">
-              <form className="space-y-6" onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
-                      value={form.name}
-                      onChange={handleChange}
-                    />
-                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-                      value={form.email}
-                      onChange={handleChange}
-                    />
-                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-                  </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name Field */}
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
+                      errors.name ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  />
+                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                 </div>
+
+                {/* Email Field */}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
+                      errors.email ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  />
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                </div>
+
+                {/* Subject Field */}
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Subject</label>
                   <input
                     type="text"
                     id="subject"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white"
                     value={form.subject}
                     onChange={handleChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
+                      errors.subject ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   />
+                  {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
                 </div>
+
+                {/* Message Field */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Message</label>
                   <textarea
                     id="message"
                     rows="5"
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition resize-none dark:bg-gray-800 dark:border-gray-600 dark:text-white ${errors.message ? 'border-red-500' : 'border-gray-300'}`}
                     value={form.message}
                     onChange={handleChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none resize-none transition dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
+                      errors.message ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   ></textarea>
                   {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
                 </div>
+
+                {/* Submit Button */}
                 <button
                   type="submit"
                   className="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-indigo-700 transition transform hover:scale-[1.02] shadow-md hover:shadow-lg dark:bg-indigo-500 dark:hover:bg-indigo-600"
                 >
                   Send Message
                 </button>
+
+                {/* Success Message */}
+                {successMessage && (
+                  <p className="text-green-600 text-center mt-4">{successMessage}</p>
+                )}
               </form>
             </div>
           </div>
