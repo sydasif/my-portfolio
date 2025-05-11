@@ -165,6 +165,20 @@ export default function App() {
                   <li>Python for Network Automation</li>
                 </ul>
               </div>
+              <div className="grid grid-cols-2 gap-6">
+                {[
+                  { icon: "🧠", label: "Network Automation", value: "Advanced" },
+                  { icon: "📊", label: "Ansible & Python", value: "Intermediate" },
+                  { icon: "☁️", label: "Linux & DevOps", value: "Proficient" },
+                  { icon: "💻", label: "Backend Development", value: "Beginner" }
+                ].map((skill, idx) => (
+                  <div key={idx} className="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div className="text-4xl mb-2">{skill.icon}</div>
+                    <h3 className="font-semibold text-lg text-gray-800">{skill.label}</h3>
+                    <p className="text-sm text-gray-500">{skill.value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
