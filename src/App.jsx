@@ -46,10 +46,11 @@ export default function App() {
       link: "https://github.com/sydasif/resume_template"
     },
     {
-      title: "Weather Dashboard",
-      description: "Designed a responsive weather dashboard integrating OpenWeatherMap API with live data visualization charts.",
-      techStack: ["Angular", "Chart.js", "OpenWeatherMap"],
-      image: "https://placehold.co/600x400/db2777/ffffff?text=Weather+Dashboard "
+      title: "Python for Network Automation",
+      description: "Learn Network Programmability with Python, GNS3, and Cisco devices.",
+      techStack: ["Python", "Cisco", "GNS3"],
+      image: "https://placehold.co/600x400/db2777/ffffff?text=Python+Book ",
+      link: "https://python-automation-book.readthedocs.io/en/latest/"
     }
   ];
 
