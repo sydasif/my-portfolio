@@ -116,10 +116,10 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center">
             <div className="md:w-1/2 mt-10 md:mt-0">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
-                Hi, I'm John Doe
+                Hi, I'm Syed Asif
               </h1>
               <p className="mt-4 text-lg md:text-xl text-gray-600 max-w-lg">
-                Passionate Software Engineer specializing in full-stack development and AI-powered solutions.
+                Passionate NetDevOps Engineer specializing in Cisco Network Automation.
               </p>
               <div className="mt-6 flex flex-wrap gap-4">
                 <a href="#contact" className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition transform hover:scale-105 shadow-md">
