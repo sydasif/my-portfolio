@@ -31,10 +31,11 @@ export default function App() {
       image: "https://placehold.co/600x400/2563eb/ffffff?text=Network+Utilities "
     },
     {
-      title: "E-commerce Platform",
-      description: "Built a scalable e-commerce platform with real-time inventory tracking and secure payment integration.",
-      techStack: ["Next.js", "MongoDB", "Stripe API"],
-      image: "https://placehold.co/600x400/0891b2/ffffff?text=E-Commerce+Platform "
+      title: "Django Network Device Manager",
+      description: "A Django application for network device management using Netmiko library. This tool provides a web interface for managing and interacting with network devices through SSH connections.",
+      techStack: ["Django", "Python", "Netmiko"],
+      image: "https://placehold.co/600x400/10b981/ffffff?text=Network+Manager",
+      link: "https://github.com/sydasif/django_network_manager"
     },
     {
       title: "Task Management Tool",
@@ -251,7 +252,7 @@ export default function App() {
                         </span>
                       ))}
                     </div>
-                    <a href="https://github.com/sydasif/django-network-app" className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800 transition-colors">
+                    <a href={project.link} className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800 transition-colors">
                       View Details
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
