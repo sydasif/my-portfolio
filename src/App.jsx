@@ -341,7 +341,6 @@ const Contact = () => {
                 <div className="flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span>New York, USA</span>
                 </div>
@@ -431,3 +430,48 @@ const Contact = () => {
     </section>
   );
 };
+
+// Footer Component
+const Footer = () => {
+  return (
+    <footer className="py-6 bg-gray-100 dark:bg-gray-900 text-center">
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        © {new Date().getFullYear()} Syd Asif. All rights reserved.
+      </p>
+    </footer>
+  );
+};
+
+function App() {
+  // State for Navbar (active section, mobile menu)
+  const [activeSection, setActiveSection] = useState('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Effect for scroll tracking (simplified)
+  useEffect(() => {
+    // Logic to update activeSection based on scroll
+  }, []);
+
+  // Placeholder project data
+  const projectsData = [
+    { title: "Project 1", description: "Desc 1", techStack: ["React", "Node"], image: "https://placehold.co/600x400", link: "#" },
+    { title: "Project 2", description: "Desc 2", techStack: ["Python", "Flask"], image: "https://placehold.co/600x400", link: "#" }
+  ];
+
+
+  return (
+    <div className="dark:bg-gray-900">
+      <Navbar activeSection={activeSection} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      <main>
+        <Hero />
+        <About />
+        <Education />
+        <Projects projects={projectsData} /> {/* Pass placeholder data */}
+        <Contact />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
